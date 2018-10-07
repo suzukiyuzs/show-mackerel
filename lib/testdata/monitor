@@ -1,0 +1,21 @@
+[
+  {
+    "id": "0123456789a",
+    "name": "disk.aa-00.writes.delta",
+    "memo": "This monitor is ...",
+    "type": "host",
+    "duration": 3,
+    "metric": "disk.aa-00.writes.delta",
+    "operator": ">",
+    "warning": 20000.0,
+    "critical": 400000.0,
+    "maxCheckAttempts": 3,
+    "notificationInterval": 60,
+    "scopes": [
+      "Hatena-Blog"
+    ],
+    "excludeScopes": [
+      "Hatena-Bookmark: db-master"
+    ]
+  }
+]
