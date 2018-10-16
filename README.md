@@ -2,7 +2,9 @@
 
 ## Description
 
-Show mackerel monitor setting and agent checkplugin settings by markdown format.
+Show mackerel monitor setting and agent checkplugin settings by markdown format.  
+
+caution: Host type monitor setting only can be parsed. Service type and external type can't be parsed. 
 
 ## Build
 
@@ -63,30 +65,35 @@ $
 ### Show monitor settings
 
 ```
+$ export MACKEREL_APIKEY=<Mackerel API Key>
+$ mkr monitors pull
 $ cat monitors
-[
-  {
-    "id": "0123456789a",
-    "name": "disk.aa-00.writes.delta",
-    "memo": "This monitor is ...",
-    "type": "host",
-    "duration": 3,
-    "metric": "disk.aa-00.writes.delta",
-    "operator": ">",
-    "warning": 20000.0,
-    "critical": 400000.0,
-    "maxCheckAttempts": 3,
-    "notificationInterval": 60,
-    "scopes": [
-      "Hatena-Blog"
-    ],
-    "excludeScopes": [
-      "Hatena-Bookmark: db-master"
+{
+    "monitors": [
+        {
+            "id": "3pd4qrKKhRw",
+            "id": "0123456789a",
+            "name": "disk.aa-00.writes.delta",
+            "memo": "This monitor is ...",
+            "type": "host",
+            "duration": 3,
+            "metric": "disk.aa-00.writes.delta",
+            "operator": ">",
+            "warning": 20000.0,
+            "critical": 400000.0,
+            "maxCheckAttempts": 3,
+            "notificationInterval": 60,
+            "scopes": [
+                "Hatena-Blog"
+            ],
+            "excludeScopes": [
+                "Hatena-Bookmark: db-master"
+            ]
+        }
     ]
-  }
-]
+}
 $
-$ ./show-mackerel -m monitor -f ./monitors
+$ ./show-mackerel -m monitor -f ./monitors.json
 # Mackerel monitor
 |     ID      |          Name           |        Memo         | Type | IsMute | NotificationInterval |         Metric          | Operator | Warning | Critical | Duratoin | MaxCheckAttempts |   Scopes    |       ExcludeScopes        |
 |-------------|-------------------------|---------------------|------|--------|----------------------|-------------------------|----------|---------|----------|----------|------------------|-------------|----------------------------|

@@ -7,21 +7,23 @@ import (
 	"io/ioutil"
 )
 
-type MonitorHostMetric struct {
-	ID                   string   `json:"id"`
-	Name                 string   `json:"name"`
-	Memo                 string   `json:"memo"`
-	Type                 string   `json:"type"`
-	IsMute               bool     `json:"isMute"`
-	NotificationInterval uint64   `json:"notificationInterval"`
-	Metric               string   `json:"metric"`
-	Operator             string   `json:"operator"`
-	Warning              float64  `json:"warning"`
-	Critical             float64  `json:"critical"`
-	Duration             uint64   `json:"duration"`
-	MaxCheckAttempts     uint64   `json:"maxCheckAttempts"`
-	Scopes               []string `json:"scopes"`
-	ExcludeScopes        []string `json:"excludeScopes"`
+type MackerelMonitors struct {
+	Monitors []struct {
+		ID                   string   `json:"id"`
+		Name                 string   `json:"name"`
+		Memo                 string   `json:"memo"`
+		Type                 string   `json:"type"`
+		IsMute               bool     `json:"isMute"`
+		NotificationInterval uint64   `json:"notificationInterval"`
+		Metric               string   `json:"metric"`
+		Operator             string   `json:"operator"`
+		Warning              float64  `json:"warning"`
+		Critical             float64  `json:"critical"`
+		Duration             uint64   `json:"duration"`
+		MaxCheckAttempts     uint64   `json:"maxCheckAttempts"`
+		Scopes               []string `json:"scopes"`
+		ExcludeScopes        []string `json:"excludeScopes"`
+	} `json:"monitors"`
 }
 
 func parseMonitor(data [][]string, file string) ([][]string, error) {
@@ -31,14 +33,14 @@ func parseMonitor(data [][]string, file string) ([][]string, error) {
 		return data, err
 	}
 
-	var mon []MonitorHostMetric
+	var mon MackerelMonitors
 
 	if err = json.Unmarshal(raw, &mon); err != nil {
 		err := errors.New("Mackerel monitor file parse error")
 		return data, err
 	}
 
-	for _, m := range mon {
+	for _, m := range mon.Monitors {
 		pID := fmt.Sprint(m.ID)
 		pName := fmt.Sprint(m.Name)
 
